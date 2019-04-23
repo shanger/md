@@ -7,10 +7,10 @@ ps: keep-alive 只允许同时渲染一个子元素
 #### 使用
 * 基本用法
 
-![基本用法](http://94.191.25.51/uploads/images/9924a0b20e8da.png)
+![基本用法](http://94.191.25.51/uploads/images/carbon1.png)
 * keep-alive 和 vue-router
 
- ![基本用法](http://94.191.25.51/uploads/images/8acc885ce67f8.png)
+ ![基本用法](http://94.191.25.51/uploads/images/carbon2.png)
 
 ### 使用场景
 * 保留组件状态
@@ -178,4 +178,4 @@ function reactivateComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
 ### 组件的处理过程
 组件的处理过程大致如下
 
- ![处理过程](http://94.191.25.51/uploads/images/4ef2dadb5b693.png)
+ ![处理过程](http://94.191.25.51/uploads/images/5b9a8b6d96811b67ceef67116fe5edb3.png)
