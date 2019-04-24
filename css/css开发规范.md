@@ -60,7 +60,7 @@ css module
 前面说到vue实现的scope有性能方面的问题，那么接下来就分析下css选择器的原理。
 首先，排版引擎解析css选择器的方式是从右边往左解析。接下来分析为什么会这样做。
 
-![浏览器解析过程](http://94.191.25.51:8081/uploads/images/11f29b0e3f59a.jpg)
+![浏览器解析过程](https://www.ilmiao.com:8081/uploads/images/11f29b0e3f59a.jpg)
 
 我们分析在dom tree 和 style rules 建立Render tree的过程中，dom tree在style rules找到符合的selector并应用*（这里有个小知识就是为什么是给dom元素找样式规则，而不是根据样式规则找元素，是因为，即使没有style也是会生成render tree的所以才会根据dom来）*。两者并不是一一对应的，大量的节点不会被rules匹配，所以要有一个高效快速的匹配方式。
 

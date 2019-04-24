@@ -4,7 +4,7 @@
 ### TCP
 TCP是一种面向连接的、可靠的、基于字节流的传输层协议。本文主要讨论的是建立连接以及传输的安全性问题，即主要讨论建立连接的过程下文的TLS也是同样。下面就来看看tcp建立连接的三次握手过程。
 
-![tcp三次握手](http://94.191.25.51/uploads/images/http2.jpg)
+![tcp三次握手](https://www.ilmiao.com/uploads/images/http2.jpg)
 
 1. 建立连接时，客户端发送syn包（syn=j）到服务器，并进入SYN_SENT状态，等待服务器确认；SYN：同步序列编号（Synchronize Sequence Numbers）
 2. 服务器收到syn包，必须确认客户的SYN（ack=j+1），同时自己也发送一个SYN包（syn=k），即SYN+ACK包，此时服务器进入SYN_RECV状态
@@ -16,11 +16,11 @@ TCP是一种面向连接的、可靠的、基于字节流的传输层协议。�
 表示内核为相应套接字排队的最大连接数。
 
 ### TLS
-![https](http://94.191.25.51/uploads/images/http1.jpg)
+![https](https://www.ilmiao.com/uploads/images/http1.jpg)
 
 前文说到，https在传输层tcp和应用层http中间加入了TLS。那么TSL的握手过程都做了哪些操作呢？
 
-![TSL握手过程](http://94.191.25.51/uploads/images/http3.jpg)
+![TSL握手过程](https://www.ilmiao.com/uploads/images/http3.jpg)
 1. Client Hello 
 客户端向服务端发送Client Hello消息，消息包含了客户端生成的随机数Random1、客户端支持的加密套件（Ciphers）和SSL Version
 2. Server Hello + Certificate + Server Hello Done
@@ -38,7 +38,7 @@ TCP是一种面向连接的、可靠的、基于字节流的传输层协议。�
 
 ***抓包查看***
 
-![client hello](http://94.191.25.51/uploads/images/http4.jpg)
+![client hello](https://www.ilmiao.com/uploads/images/http4.jpg)
 
 有兴趣的可以下载[wireshark](https://www.wireshark.org/download.html)抓包看一下
 
