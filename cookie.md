@@ -36,18 +36,24 @@
 * 如果字符串中并没有等号‘=’，浏览器把它当作name为空的Cookie，即Set-Cookie：foo和Set-Cookie：= foo是一样的。
 * 当浏览器输出一个name为空的cookie，其中的等号‘=’会被忽略。因此，Set-Cookie：=foo和Set-Cookie： foo是一样的。
 * 虽然等号‘=’周围的空格将被去掉，但逗号、空格在name和value中似乎也可以使用，控制字符（\ x00到\ x1F和\ 0x7F部分）是不允许使用的。
+
 #### expires / maxAge
 以上用来表示cookie的过期时间，如果不设置cookie就会是会话级的存储，会随浏览器关闭而清除。
 * maxAge是一个数字，从Date.now()获取到的毫秒数。
 * expires 过期时间的Date
+
 #### path
 cookie的路径，cookie使用权限的一种管理方式。比如：“/test”下的cookie，在“/ceshi”目录下并不能访问。默认值是“/”。
+
 #### domain
 cookie 域名，不同域名下的cookie不共享。
+
 #### secure
 安全cookie。设置为true时，只有在https协议下才能上传到服务器，在http协议下无法使用。
+
 #### httponly
 服务器可访问cookie，设置为true时，浏览器端无法获取使用。
+
 #### samesite
 允许服务器设置cookie不随跨域请求一起发送，这样可以在一定程度上防范跨站请求伪造攻击（CSRF）。
 * Strict
