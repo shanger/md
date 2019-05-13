@@ -12,6 +12,7 @@
 ### 根据域名查找IP
 关键词：dns、dns缓存
 
+[DNS解析过程及部分知识点拓展](https://www.ilmiao.com/article/js/19)
 ### 建立连接
 关键词：http、https、http2、三次握手、四次挥手、https的优化、缓存、负载均衡、gzip
 
