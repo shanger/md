@@ -7,6 +7,7 @@
 3. 发送HTTP请求
 4. 服务器处理请求并返回HTTP报文
 5. 浏览器解析渲染页面
+
 ## 主要坑位
 
 ### 根据域名查找IP
@@ -15,7 +16,9 @@
 [DNS解析过程及部分知识点拓展](https://www.ilmiao.com/article/js/19)
 ### 建立连接
 关键词：http、https、http2、三次握手、四次挥手、https的优化、缓存、负载均衡、gzip
-
+* [https知识整理](https://www.ilmiao.com/article/js/11)
+* [TLS 握手优化详解](https://imququ.com/post/optimize-tls-handshake)
+* [四次挥手](https://www.ilmiao.com/article/js/20)
 ### 页面解析
 关键词：dom、cssom、layer tree、
 
