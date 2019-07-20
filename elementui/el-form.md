@@ -69,6 +69,17 @@ mounted() {
 ## el-form的规划
 ![el-form规划](https://www.ilmiao.com/uploads/images/78765bcfe7d0f.jpg 'el-from')
 
+## 应用
+### 验证的触发
+验证触发都是从表单元素dispatch上来的，我们在一个formitem中校验触发条件的书写要考虑到其中的表单元素能触发什么样的事件。其中需要注意的是upload并不会触发任何验证，因为我们不会给type=file的input绑定值，不触发事件是合理的，我们在input的事件出发后手动调用`validate`就好了。
+ps:还有一点就是upload的组件会在上传时将input的值置为`null`，所以即使你选了连个同样的文件第二次也会触发input的change
+表单元素|事件
+--|:--:
+input|blur change
+data-picker|blur change
+select|change
+upload|none
+
 
 ## 几个设计上的考虑探讨
 
