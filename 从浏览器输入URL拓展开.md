@@ -19,6 +19,8 @@
 * [https知识整理](https://www.ilmiao.com/article/js/11)
 * [TLS 握手优化详解](https://imququ.com/post/optimize-tls-handshake)
 * [四次挥手](https://www.ilmiao.com/article/js/20)
+* [缓存](https://ilmiao.com/article/js/23)
+
 ### 页面解析
 关键词：dom、cssom、layer tree、
 
