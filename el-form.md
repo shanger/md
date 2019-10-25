@@ -44,11 +44,39 @@ this.form.labelPosition
 this.form.model
 
 ```
-都是返回`el-form`的组件实例，主要是这里有个`isNested`用来判断是否是嵌套，来做样式的处理，其他没有想到。看了下提交记录`provide`确实在`form`之后，猜测可能是没有迁移完毕。在有大量数据要通信需要写繁琐的props仅仅是为了获取某些数据的时候可以考虑下使用。
+都是返回`el-form`的组件实例，主要是这里有个`isNested`用来判断是否是嵌套，来做样式的处理，其他没有想到。
+```
+export function resolveInject (inject: any, vm: Component): ?Object {
+  if (inject) {
+    // inject is :any because flow is not smart enough to figure out cached
+    const result = Object.create(null)
+    const keys = hasSymbol
+      ? Reflect.ownKeys(inject)
+      : Object.keys(inject)
+
+    for (let i = 0; i < keys.length; i++) {
+      // ...
+      while (source) {
+        if (source._provided && hasOwn(source._provided, provideKey)) {
+          result[key] = source._provided[provideKey]
+          break
+        }
+        // 不论组件层次有多深，并在起上下游关系成立的时间里始终生效
+        source = source.$parent
+      }
+      if (!source) {
+        // ...
+      }
+    }
+    return result
+  }
+}
+
+```
 
 ### 父组件和子组件的联系
 
-`el-form`访问`el-formitem`实例并不是通过$children来实现的，而是`el-formitem`自己主动将自己的信息提交给了`el-form`。
+`el-form`访问`el-formitem`实例并不是通过$children来实现的，而是`el-formitem`自己主动将自己的信息注册到了`el-form`。
 ```
   // formitem
   if (this.prop) {
@@ -62,8 +90,47 @@ this.form.model
   });
 
 ```
-我们先不讨论这样做的优劣，这样做的目的出于功能上的考量，通过上报的方式来过滤没有`prop`属性即不需要做校验的的item，其实这里还是要讨论组件设计的问题。这样的做方法会让父组件保存冗余的`el-formitem`实例信息，牺牲了内存换来了什么？
+我们先不讨论这样做的优劣，这样做的目的出于功能上的考量，通过上报的方式来过滤没有`prop`属性即不需要做校验的的item，其实这里还是要讨论组件设计的问题。这样的做方法会让父组件保存冗余的`el-formitem`实例信息，牺牲了内存换来了什么？`prop`的意义也仅就这一个用处，如果不需要校验没必要给每个item添加这个属性。如果我们不通过`dispatch`的方式将这些formitem存储到form的实例上，当我们使用他们的时候就要从`chlidrend`中通过判断组件的name和有没有`prop`来过滤。
 
+### 校验
+模式：required、Pattern、Range、Length
+
+* string: Must be of type string. This is the default type.
+* number: Must be of type number.
+* boolean: Must be of type boolean.
+* method: Must be of type function.
+* regexp: Must be an instance of RegExp or a string that does not generate an exception when creating a new RegExp.
+* integer: Must be of type number and an integer.
+* float: Must be of type number and a floating point number.
+* array: Must be an array as determined by Array.isArray.
+* object: Must be of type object and not Array.isArray.
+* enum: Value must exist in the enum.
+* date: Value must be valid as determined by Date
+* url: Must be of type url.
+* hex: Must be of type hex.
+* email: Must be of type email.
+* any: Can be any type.
+
+#### validator
+
+* rule: 当前校验字段在 descriptor 中所对应的校验规则
+  field 
+  fullField
+  required
+  type
+  validator
+* value: 当前校验字段的值
+* callback: 在校验完成时的回调
+* source: 传入 validate 方法的 object，也就是需要校验的对象
+* options: 传入的额外选项
+
+除了async-validator,本身提供的几种类型的校验，特殊的校验需要使用validator、asyncValidator方法，但是这两个个方法都不允许传入其他参数，需要额外数据的就在作用域内取。
+这部分一方面介绍async-validator内置的校验类型，还有就是想让大家参考下他们的校验方法。
+```
+  integer(value) {
+    return types.number(value) && parseInt(value, 10) === value;
+  }
+```
 
 ### restfields
 
@@ -115,3 +182,9 @@ resetField() {
 问题就在于只有dialog展示的时候才会渲染`el-form`，这个时候`initialValue`是你渲染后的初始化的数据，rest到也就是初始化的数据。
 
 ## 组件的设计规范
+组件化开发的思想是我们大家都比较熟悉的而且是应用非常多的一种编程思想，但是可能因为一些客观原因比如个人的编码习惯、业务的实现思路不一致导致组件的风格不一致，规范的定义是为了减少大家由于代码风格和实现差异带来的疑问和不适应；我们组件化的目标是为了模块拆分、代码复用，是一种解耦操作，所以要对组件的功能和独立性有一定的要求；组件的功能能力定义尽量完善，避免因为初期设计的缺陷导致升级不够平滑对已有代码逻辑有较大入侵。
+* 提供完整的功能
+  尽可能完整，减少因为少了些使用频率低但功能而进行的迭代
+* 独立性
+  独立性不是一个外部方法都不引入，是减少对业务代码的入侵。提供完整可用的输出，非组件功能可以提供各个节点的钩子。
+其实在我们的开发场景中，为了使代码逻辑清晰会将一部分业务代码组件化，虽然复用程度可能不高，但也一定保证功能逻辑的内聚。
