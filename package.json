@@ -1,0 +1,29 @@
+{
+  "name": "md",
+  "version": "1.0.0",
+  "description": "博客markdow文件",
+  "main": "index.js",
+  "dependencies": {
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.1.0"
+  },
+  "devDependencies": {},
+  "script": {
+    "commit": "git-cz"
+  },
+ "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shanger/md.git"
+  },
+  "author": "shanger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shanger/md/issues"
+  },
+  "homepage": "https://github.com/shanger/md#readme"
+}
